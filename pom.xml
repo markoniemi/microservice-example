@@ -3,22 +3,17 @@
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
     <modelVersion>4.0.0</modelVersion>
-<!--     <parent> -->
-<!--         <groupId>org.springframework.boot</groupId> -->
-<!--         <artifactId>spring-boot-starter-parent</artifactId> -->
-<!--         <version>2.1.2.RELEASE</version> -->
-<!--     </parent> -->
     <groupId>org.cloud-config</groupId>
     <artifactId>cloud-config-example</artifactId>
     <packaging>pom</packaging>
     <version>0.1-SNAPSHOT</version>
     <!-- mvn versions:set -DnewVersion=1.5-SNAPSHOT -DgenerateBackupPoms=false -->
     <scm>
-        <connection>scm:git:https://github.com/markoniemi/cloud-config.git</connection>
-        <developerConnection>scm:git:https://github.com/markoniemi/cloud-config.git</developerConnection>
-        <url>https://github.com/markoniemi/cloud-config.git</url>
+        <connection>scm:git:https://github.com/markoniemi/cloud-config-example.git</connection>
+        <developerConnection>scm:git:https://github.com/markoniemi/cloud-config-example.git</developerConnection>
+        <url>https://github.com/markoniemi/cloud-config-example.git</url>
     </scm>
-    <url>https://github.com/markoniemi/cloud-config/wiki</url>
+    <url>https://github.com/markoniemi/cloud-config-example/wiki</url>
     <modules>
         <module>cloud-config-server</module>
         <module>cloud-config-client</module>
@@ -36,18 +31,36 @@
         <selenium.version>3.11.0</selenium.version>
         <spring.boot.version>2.1.2.RELEASE</spring.boot.version>
     </properties>
-    <plugins>
-        <plugin>
-            <artifactId>maven-compiler-plugin</artifactId>
-            <configuration>
-                <source>1.8</source>
-                <target>1.8</target>
-            </configuration>
-        </plugin>
-    </plugins>
+    <build>
+        <plugins>
+            <plugin>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <configuration>
+                    <source>1.8</source>
+                    <target>1.8</target>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-maven-plugin</artifactId>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-failsafe-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>integration-test</goal>
+                            <goal>verify</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+        </plugins>
+    </build>
     <dependencyManagement>
-    <dependencies>
-                <!-- Spring -->
+        <dependencies>
+            <!-- Spring -->
             <dependency>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-dependencies</artifactId>
@@ -70,9 +83,18 @@
                 </exclusions>
             </dependency>
             <dependency>
+                <groupId>org.springframework.cloud</groupId>
+                <artifactId>spring-cloud-dependencies</artifactId>
+                <version>${spring-cloud.version}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+            <dependency>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-starter</artifactId>
                 <version>${spring.boot.version}</version>
+                <type>pom</type>
+                <scope>import</scope>
                 <exclusions>
                     <exclusion>
                         <groupId>ch.qos.logback</groupId>
@@ -92,6 +114,8 @@
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-starter-log4j2</artifactId>
                 <version>${spring.boot.version}</version>
+                <type>pom</type>
+                <scope>import</scope>
                 <exclusions>
                     <exclusion>
                         <groupId>ch.qos.logback</groupId>
@@ -107,6 +131,13 @@
                     </exclusion>
                 </exclusions>
             </dependency>
-    </dependencies>
+        </dependencies>
     </dependencyManagement>
+    <repositories>
+        <repository>
+            <id>spring-milestones</id>
+            <name>Spring Milestones</name>
+            <url>https://repo.spring.io/milestone</url>
+        </repository>
+    </repositories>
 </project>
