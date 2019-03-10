@@ -1,0 +1,18 @@
+version: v1.0
+name: cloud-config-example
+agent:
+  machine:
+    type: e1-standard-2
+    os_image: ubuntu1804
+
+blocks:
+  - name: "Build"
+    task:
+      jobs:
+      - name: maven build
+        commands:
+          - checkout
+          - ls -1
+          - mvn -B compile
+          - mvn -B install
+          - mvn -B verify
