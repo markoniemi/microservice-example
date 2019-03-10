@@ -14,9 +14,4 @@ blocks:
           - checkout
           - ls -1
           - mvn -B compile
-  - name: "Test"
-    task:
-      jobs:
-      - name: maven test
-        commands:
           - mvn -B verify
