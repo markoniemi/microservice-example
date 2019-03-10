@@ -10,6 +10,24 @@
         <artifactId>cloud-config-example</artifactId>
         <version>0.1-SNAPSHOT</version>
     </parent>
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-maven-plugin</artifactId>
+                <configuration>
+                    <mainClass>org.cloudconfig.server.CloudConfigServerApplication</mainClass>
+                </configuration>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>repackage</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+        </plugins>
+    </build>    
     <dependencies>
         <dependency>
             <groupId>org.springframework.cloud</groupId>

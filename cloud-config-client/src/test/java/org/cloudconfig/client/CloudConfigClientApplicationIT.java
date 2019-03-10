@@ -23,24 +23,12 @@ import org.springframework.test.context.ContextHierarchy;
 import org.springframework.test.context.junit4.SpringRunner;
 
 @RunWith(SpringRunner.class)
- @SpringBootTest(classes = CloudConfigClientApplication.class, webEnvironment
- = WebEnvironment.DEFINED_PORT)
- @ContextHierarchy(@ContextConfiguration(classes = ApplicationConfig.class))
- @ActiveProfiles("local")
+@SpringBootTest(classes = CloudConfigClientApplication.class, webEnvironment = WebEnvironment.DEFINED_PORT)
+@ContextHierarchy(@ContextConfiguration(classes = ApplicationConfig.class))
+// @ActiveProfiles("local")
 public class CloudConfigClientApplicationIT {
     @Resource
     private String url;
-//    private String url="http://localhost:8082/cloud-config-client/hello/test";
-
-//    @Before
-//    public void before() {
-//        SpringApplicationBuilder server = new SpringApplicationBuilder(CloudConfigServerApplication.class)
-//                .properties("server.port=8081", "spring.cloud.config.server.native.search-locations=classpath:config");
-//        server.run();
-//        SpringApplicationBuilder client = new SpringApplicationBuilder(CloudConfigClientApplication.class)
-//                .profiles("remote").properties("server.port=8081");
-//        client.run();
-//    }
 
     @Test
     public void hello() {

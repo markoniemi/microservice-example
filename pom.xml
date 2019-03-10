@@ -45,6 +45,7 @@
                 <artifactId>spring-boot-maven-plugin</artifactId>
             </plugin>
             <plugin>
+                <!-- https://stackoverflow.com/questions/38726347/typenotpresentexceptionproxy-error-at-integration-test-with-maven-failsafe-plugi -->
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-failsafe-plugin</artifactId>
                 <executions>
@@ -55,6 +56,10 @@
                         </goals>
                     </execution>
                 </executions>
+                <configuration>
+                    <skipITs>${skipTests}</skipITs>
+                    <classesDirectory>${project.build.outputDirectory}</classesDirectory>
+                </configuration>
             </plugin>
         </plugins>
     </build>
