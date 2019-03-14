@@ -22,10 +22,13 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.ContextHierarchy;
 import org.springframework.test.context.junit4.SpringRunner;
 
+import lombok.extern.log4j.Log4j2;
+
 @RunWith(SpringRunner.class)
 @SpringBootTest(classes = CloudConfigClientApplication.class, webEnvironment = WebEnvironment.DEFINED_PORT)
 @ContextHierarchy(@ContextConfiguration(classes = ApplicationConfig.class))
 // @ActiveProfiles("local")
+@Log4j2
 public class CloudConfigClientApplicationIT {
     @Resource
     private String url;
@@ -38,6 +41,17 @@ public class CloudConfigClientApplicationIT {
         Assert.assertEquals(HttpStatus.OK, response.getStatusCode());
         Assert.assertTrue(response.getBody().contains("Hello"));
         Assert.assertTrue(response.getBody().contains("test"));
+    }
+    @Test
+    public void discoveryServer() throws InterruptedException {
+        Thread.sleep(10000);
+        HttpHeaders headers = createHeaders();
+        headers.setAccept(Collections.singletonList(MediaType.APPLICATION_XML));
+        log.debug("test discoveryServer");
+        ResponseEntity<String> response = new TestRestTemplate().exchange("http://localhost:8081/cloud-config-server/eureka/apps", HttpMethod.GET,
+                new HttpEntity<>(headers), String.class);
+        Assert.assertEquals(HttpStatus.OK, response.getStatusCode());
+        Assert.assertTrue(response.getBody().contains("cloud-config-client"));
     }
 
     private HttpHeaders createHeaders() {
