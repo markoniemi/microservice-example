@@ -6,7 +6,7 @@
     <artifactId>user-repository</artifactId>
     <parent>
         <groupId>org.cloud-config</groupId>
-        <artifactId>cloud-config-example</artifactId>
+        <artifactId>microservice-example</artifactId>
         <version>0.1-SNAPSHOT</version>
     </parent>
     <build>
