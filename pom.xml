@@ -4,19 +4,19 @@
     xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
     <modelVersion>4.0.0</modelVersion>
     <groupId>org.cloud-config</groupId>
-    <artifactId>cloud-config-example</artifactId>
+    <artifactId>microservice-example</artifactId>
     <packaging>pom</packaging>
     <version>0.1-SNAPSHOT</version>
     <!-- mvn versions:set -DnewVersion=1.5-SNAPSHOT -DgenerateBackupPoms=false -->
     <scm>
-        <connection>scm:git:https://github.com/markoniemi/cloud-config-example.git</connection>
-        <developerConnection>scm:git:https://github.com/markoniemi/cloud-config-example.git</developerConnection>
-        <url>https://github.com/markoniemi/cloud-config-example.git</url>
+        <connection>scm:git:https://github.com/markoniemi/microservice-example.git</connection>
+        <developerConnection>scm:git:https://github.com/markoniemi/microservice-example.git</developerConnection>
+        <url>https://github.com/markoniemi/microservice-example.git</url>
     </scm>
-    <url>https://github.com/markoniemi/cloud-config-example/wiki</url>
+    <url>https://github.com/markoniemi/microservice-example/wiki</url>
     <modules>
-        <module>cloud-config-server</module>
-        <module>cloud-config-client</module>
+        <module>config-server</module>
+        <module>user-repository</module>
     </modules>
     <properties>
         <maven.compiler.source>1.8</maven.compiler.source>
