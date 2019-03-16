@@ -1,6 +1,6 @@
-# Spring cloud config example
+# Spring microservice example
 
-### Run cloud-config-client w/o config server, using local defaults: 
+### Run user-repository w/o config-server, using local defaults: 
 
 ```
 mvn spring-boot:run -P local
@@ -9,20 +9,20 @@ mvn spring-boot:run -P local
 or
 
 ```
-java -jar cloud-config-client/target/cloud-config-client-0.1-SNAPSHOT.jar -Dspring.cloud.config.enabled=false -Dspring.profiles.active=local
+java -jar user-repository/target/user-repository-0.1-SNAPSHOT.jar -Dspring.cloud.config.enabled=false -Dspring.profiles.active=local
 ```
 
-### Run cloud-config-client with config server:
+### Run user-repository with config server:
 
 
 ```
-mvn -f cloud-config-server/pom.xml spring-boot:run
-mvn -f cloud-config-client/pom.xml spring-boot:run
+mvn -f config-server/pom.xml spring-boot:run
+mvn -f user-repository/pom.xml spring-boot:run
 ```
 
 or
 
 ```
-java -jar cloud-config-server/target/cloud-config-server-0.1-SNAPSHOT.jar
-java -jar cloud-config-client/target/cloud-config-client-0.1-SNAPSHOT.jar
+java -jar config-server/target/config-server-0.1-SNAPSHOT.jar
+java -jar user-repository/target/user-repository-0.1-SNAPSHOT.jar
 ```
