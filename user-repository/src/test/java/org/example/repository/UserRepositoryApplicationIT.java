@@ -45,7 +45,7 @@ public class UserRepositoryApplicationIT {
     }
     @Test
     public void discoveryServer() throws InterruptedException {
-        Thread.sleep(10000);
+        Thread.sleep(5000);
         HttpHeaders headers = createHeaders();
         headers.setAccept(Collections.singletonList(MediaType.APPLICATION_XML));
         log.debug("test discoveryServer");
