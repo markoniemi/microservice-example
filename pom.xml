@@ -30,6 +30,7 @@
         <maven.cargo.version>1.6.5</maven.cargo.version>
         <selenium.version>3.11.0</selenium.version>
         <spring.boot.version>2.1.2.RELEASE</spring.boot.version>
+        <spring.jpa.version>2.1.2.RELEASE</spring.jpa.version>
     </properties>
     <build>
         <plugins>
@@ -140,6 +141,18 @@
                         <artifactId>log4j-to-slf4j</artifactId>
                     </exclusion>
                 </exclusions>
+            </dependency>
+            <dependency>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-starter-data-jpa</artifactId>
+                <version>${spring.jpa.version}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+            <dependency>
+                <groupId>com.h2database</groupId>
+                <artifactId>h2</artifactId>
+                <version>1.4.197</version>
             </dependency>
         </dependencies>
     </dependencyManagement>
