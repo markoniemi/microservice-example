@@ -31,6 +31,7 @@
         <selenium.version>3.11.0</selenium.version>
         <spring.boot.version>2.1.2.RELEASE</spring.boot.version>
         <spring.jpa.version>2.1.2.RELEASE</spring.jpa.version>
+        <cxf.version>3.1.14</cxf.version>
     </properties>
     <build>
         <plugins>
@@ -153,6 +154,22 @@
                 <groupId>com.h2database</groupId>
                 <artifactId>h2</artifactId>
                 <version>1.4.197</version>
+            </dependency>
+            <!-- Apache CXF dependencies -->
+            <dependency>
+                <groupId>org.apache.cxf</groupId>
+                <artifactId>cxf-spring-boot-starter-jaxrs</artifactId>
+                <version>${cxf.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.codehaus.jackson</groupId>
+                <artifactId>jackson-xc</artifactId>
+                <version>1.9.13</version>
+            </dependency>
+            <dependency>
+                <groupId>org.codehaus.jackson</groupId>
+                <artifactId>jackson-jaxrs</artifactId>
+                <version>1.9.13</version>
             </dependency>
         </dependencies>
     </dependencyManagement>

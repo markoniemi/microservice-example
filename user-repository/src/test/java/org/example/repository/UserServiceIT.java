@@ -9,7 +9,6 @@ import org.example.repository.config.ApplicationConfig;
 import org.example.repository.user.User;
 import org.example.repository.user.UserRepository;
 import org.junit.Assert;
-import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -32,10 +31,9 @@ import lombok.extern.log4j.Log4j2;
 @RunWith(SpringRunner.class)
 @SpringBootTest(classes = UserRepositoryApplication.class, webEnvironment = WebEnvironment.DEFINED_PORT)
 @ContextHierarchy(@ContextConfiguration(classes = ApplicationConfig.class))
-@ActiveProfiles("local")
+//@ActiveProfiles("local")
 @Log4j2
-@Ignore
-public class UserRepositoryIT {
+public class UserServiceIT {
     private TestRestTemplate testRestTemplate = new TestRestTemplate();
     @Resource
     private String url;
@@ -45,7 +43,7 @@ public class UserRepositoryIT {
     @Test
     // TODO get ServiceRestTestConfig from survey/survey-backend
     public void getUsers() throws JsonParseException, JsonMappingException, IOException {
-        ResponseEntity<String> responseString = testRestTemplate.getForEntity(url + "/users", String.class);
+        ResponseEntity<String> responseString = testRestTemplate.getForEntity(url + "/api/rest/users", String.class);
         Assert.assertNotNull(responseString);
         List<User> users = parseResponse(responseString);
         Assert.assertNotNull(users);
@@ -56,27 +54,7 @@ public class UserRepositoryIT {
             throws IOException, JsonParseException, JsonMappingException {
         ObjectMapper mapper = new ObjectMapper();
         mapper.configure(DeserializationFeature.ACCEPT_SINGLE_VALUE_AS_ARRAY, true);
-        // mapper.configure(DeserializationFeature.UNWRAP_ROOT_VALUE, true);
-        // return mapper.readValue(responseString.getBody(), new
-        // ParameterizedTypeReference<Resources<User>>() {
-        // });
         return mapper.readValue(responseString.getBody(), new TypeReference<List<User>>() {
         });
     }
-
-    // @Configuration
-    // static class WsClientConfig {
-    // @Resource
-    // private String url;
-    //
-    // @Bean(name = "usersProxy")
-    // public UserService usersProxy() {
-    // JaxWsProxyFactoryBean jaxWsProxyFactoryBean = new
-    // JaxWsProxyFactoryBean();
-    // jaxWsProxyFactoryBean.setServiceClass(UserService.class);
-    // jaxWsProxyFactoryBean.setAddress(url + "/api/soap/users");
-    //
-    // return (UserService) jaxWsProxyFactoryBean.create();
-    // }
-    // }
 }
