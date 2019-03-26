@@ -1,0 +1,8 @@
+kind: pipeline
+name: default
+
+steps:
+- name: build
+  image: maven:3.6-jdk-8-alpine
+  commands:
+  - mvn install verify -DskipTests=true -Dmaven.javadoc.skip=true -B -V
