@@ -7,13 +7,10 @@ import org.example.repository.user.Role;
 import org.example.repository.user.User;
 import org.example.repository.user.UserRepository;
 
-import lombok.Setter;
 import lombok.extern.log4j.Log4j2;
 
 @Log4j2
 public class DatabaseInitializer {
-
-    @Setter
     @Resource
     private UserRepository userRepository;
 

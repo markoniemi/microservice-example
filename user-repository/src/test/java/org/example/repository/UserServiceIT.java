@@ -8,6 +8,7 @@ import javax.annotation.Resource;
 import org.example.repository.config.ApplicationConfig;
 import org.example.repository.user.User;
 import org.example.repository.user.UserRepository;
+import org.example.repository.user.UserService;
 import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -31,7 +32,7 @@ import lombok.extern.log4j.Log4j2;
 @RunWith(SpringRunner.class)
 @SpringBootTest(classes = UserRepositoryApplication.class, webEnvironment = WebEnvironment.DEFINED_PORT)
 @ContextHierarchy(@ContextConfiguration(classes = ApplicationConfig.class))
-//@ActiveProfiles("local")
+@ActiveProfiles("local")
 @Log4j2
 public class UserServiceIT {
     private TestRestTemplate testRestTemplate = new TestRestTemplate();
@@ -39,16 +40,23 @@ public class UserServiceIT {
     private String url;
     @Resource
     UserRepository userRepository;
+//    @Resource
+//    UserService userService;
 
     @Test
     // TODO get ServiceRestTestConfig from survey/survey-backend
-    public void getUsers() throws JsonParseException, JsonMappingException, IOException {
+    public void getUsersWithRestTemplate() throws JsonParseException, JsonMappingException, IOException {
         ResponseEntity<String> responseString = testRestTemplate.getForEntity(url + "/api/rest/users", String.class);
         Assert.assertNotNull(responseString);
         List<User> users = parseResponse(responseString);
         Assert.assertNotNull(users);
         Assert.assertEquals(1, users.size());
+        Assert.assertEquals("admin", users.get(0).getUsername());
     }
+//    public void getUsers() {
+//        User[] users = userService.findAll();
+//        Assert.assertEquals(1, users.length);
+//    }
 
     private List<User> parseResponse(ResponseEntity<String> responseString)
             throws IOException, JsonParseException, JsonMappingException {
