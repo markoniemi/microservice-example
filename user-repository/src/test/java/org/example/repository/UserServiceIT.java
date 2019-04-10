@@ -32,7 +32,7 @@ import lombok.extern.log4j.Log4j2;
 @RunWith(SpringRunner.class)
 @SpringBootTest(classes = UserRepositoryApplication.class, webEnvironment = WebEnvironment.DEFINED_PORT)
 @ContextHierarchy(@ContextConfiguration(classes = ApplicationConfig.class))
-@ActiveProfiles("local")
+//@ActiveProfiles("local")
 @Log4j2
 public class UserServiceIT {
     private TestRestTemplate testRestTemplate = new TestRestTemplate();
