@@ -1,5 +1,36 @@
 # Spring microservice example
 
+<tr>
+<td><a href="https://github.com/markoniemi/microservice-example">microservice-example</a></td>
+<td>
+<a href="https://dev.azure.com/markoniemi0275/markoniemi/_build/latest?definitionId=8&branchName=master">
+<image src="https://dev.azure.com/markoniemi0275/markoniemi/_apis/build/status/markoniemi.microservice-example?branchName=master"/>
+</a>
+</td>
+<td>
+</td>
+<td>
+<a href="https://travis-ci.org/markoniemi/microservice-example">
+<image src="https://travis-ci.org/markoniemi/microservice-example.svg?branch=master"/>
+<a/>
+</td>
+<td>
+<a href="https://sonarcloud.io/dashboard?id=org.survey%3Amicroservice-example">
+<image src="https://sonarcloud.io/api/project_badges/measure?project=org.survey%3Amicroservice-example&metric=alert_status"/>
+<a/>
+</td>
+<td>
+<a href="https://sonarcloud.io/dashboard?id=org.survey%3Amicroservice-example">
+<image src="https://sonarcloud.io/api/project_badges/measure?project=org.survey%3Amicroservice-example&metric=coverage"/>
+<a/>
+</td>
+<td>
+<a href="https://snyk.io/test/github/markoniemi/microservice-example">
+<image src="https://snyk.io/test/github/markoniemi/microservice-example/badge.svg"/>
+</td>
+</tr>
+
+
 ### Run user-repository w/o config-server, using local defaults: 
 
 ```
