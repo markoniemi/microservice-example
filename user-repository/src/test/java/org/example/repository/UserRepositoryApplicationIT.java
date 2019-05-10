@@ -1,10 +1,13 @@
 package org.example.repository;
 
+import java.net.URI;
 import java.util.Arrays;
 import java.util.Collections;
+import java.util.List;
 
 import javax.annotation.Resource;
 
+import org.apache.commons.collections.CollectionUtils;
 import org.example.repository.config.ApplicationConfig;
 import org.junit.Assert;
 import org.junit.Assume;
@@ -14,6 +17,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.context.SpringBootTest.WebEnvironment;
 import org.springframework.boot.test.web.client.TestRestTemplate;
+import org.springframework.cloud.client.ServiceInstance;
+import org.springframework.cloud.client.discovery.DiscoveryClient;
 import org.springframework.core.env.Environment;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
@@ -38,9 +43,30 @@ public class UserRepositoryApplicationIT {
     private String url;
     @Autowired
     Environment environment;
+    @Autowired
+    DiscoveryClient discoveryClient;
 
     private boolean isCloudConfigEnabled() {
         return !Arrays.asList(environment.getActiveProfiles()).contains("local");
+    }
+    
+    private void waitForServiceRegistration() throws InterruptedException {
+        while (discoveryClient.getInstances("user-repository").isEmpty()){
+            Thread.sleep(1000);
+            log.info(discoveryClient.getServices());
+        }
+    }
+    
+    private String getUrl() {
+        if (isCloudConfigEnabled()) {
+            List<ServiceInstance> instances = discoveryClient.getInstances("user-repository");
+            if (CollectionUtils.isNotEmpty(instances)) {
+                log.info(instances.get(0).getUri());
+                // TODO register service with context path
+                return instances.get(0).getUri().toString()+"/user-repository"; 
+            }
+        }
+        return null;
     }
 
     @Test
@@ -55,10 +81,13 @@ public class UserRepositoryApplicationIT {
         Assert.assertTrue(response.getBody().contains("localRole"));
     }
     @Test
-    public void helloRemote() {
+    public void helloRemote() throws InterruptedException {
         Assume.assumeTrue(isCloudConfigEnabled());
+        waitForServiceRegistration();
+//        Thread.sleep(5000);
         HttpHeaders headers = createHeaders();
-        ResponseEntity<String> response = new TestRestTemplate().exchange(url + "/hello/test", HttpMethod.GET,
+        log.info(getUrl());
+        ResponseEntity<String> response = new TestRestTemplate().exchange(getUrl() + "/hello/test", HttpMethod.GET,
                 new HttpEntity<>(headers), String.class);
         Assert.assertEquals(HttpStatus.OK, response.getStatusCode());
         log.info("response: " + response.getBody());
@@ -69,7 +98,8 @@ public class UserRepositoryApplicationIT {
     @Test
     public void discoveryServer() throws InterruptedException {
         Assume.assumeTrue(isCloudConfigEnabled());
-        Thread.sleep(5000);
+        waitForServiceRegistration();
+//        Thread.sleep(5000);
         HttpHeaders headers = createHeaders();
         headers.setAccept(Collections.singletonList(MediaType.APPLICATION_XML));
         log.debug("test discoveryServer");
