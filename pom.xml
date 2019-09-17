@@ -29,7 +29,7 @@
         <tomcat.version>8.5.34</tomcat.version>
         <maven.cargo.version>1.6.5</maven.cargo.version>
         <selenium.version>3.11.0</selenium.version>
-        <spring.boot.version>2.1.2.RELEASE</spring.boot.version>
+        <spring.boot.version>2.1.8.RELEASE</spring.boot.version>
         <spring.jpa.version>2.1.2.RELEASE</spring.jpa.version>
         <cxf.version>3.1.14</cxf.version>
     </properties>
