@@ -1,15 +1,18 @@
 package example.configserver;
 
 import java.util.Collections;
+import java.util.List;
 
 import javax.annotation.Resource;
 
+import org.apache.commons.collections.CollectionUtils;
 import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.context.SpringBootTest.WebEnvironment;
 import org.springframework.boot.test.web.client.TestRestTemplate;
+import org.springframework.cloud.client.ServiceInstance;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
@@ -32,20 +35,21 @@ public class ConfigServerApplicationIT {
     @Resource
     private String url;
 
-	@Test
-	public void getConfig() {
-        HttpHeaders headers = createHeaders();
-        ResponseEntity<String> response = new TestRestTemplate().exchange(url + "/user-repository/default", HttpMethod.GET,
+    @Test
+    public void getConfig() {
+        String body = get(url + "/user-repository/default", MediaType.APPLICATION_JSON);
+        Assert.assertTrue(body.contains("Remote"));
+        Assert.assertTrue(body.contains("user.role"));
+    }
+
+    private String get(String url, MediaType mediaType) {
+        HttpHeaders headers = new HttpHeaders();
+        if (mediaType != null) {
+            headers.setAccept(Collections.singletonList(mediaType));
+        }
+        ResponseEntity<String> response = new TestRestTemplate().exchange(url, HttpMethod.GET,
                 new HttpEntity<>(headers), String.class);
         Assert.assertEquals(HttpStatus.OK, response.getStatusCode());
-        Assert.assertTrue(response.getBody().contains("Developer"));
-        Assert.assertTrue(response.getBody().contains("user.role"));
-	}
-
-    private HttpHeaders createHeaders() {
-        HttpHeaders headers = new HttpHeaders();
-        headers.setAccept(Collections.singletonList(MediaType.APPLICATION_JSON));
-        return headers;
+        return response.getBody();
     }
 }
-

@@ -1,6 +1,6 @@
 package org.example.repository;
 
-import java.net.URI;
+import java.io.IOException;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
@@ -8,6 +8,7 @@ import java.util.List;
 import javax.annotation.Resource;
 
 import org.apache.commons.collections.CollectionUtils;
+import org.apache.http.client.ClientProtocolException;
 import org.example.repository.config.ApplicationConfig;
 import org.junit.Assert;
 import org.junit.Assume;
@@ -26,7 +27,6 @@ import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.ContextHierarchy;
 import org.springframework.test.context.junit4.SpringRunner;
@@ -42,77 +42,75 @@ public class UserRepositoryApplicationIT {
     @Resource
     private String url;
     @Autowired
-    Environment environment;
+    private Environment environment;
     @Autowired
-    DiscoveryClient discoveryClient;
-
-    private boolean isCloudConfigEnabled() {
-        return !Arrays.asList(environment.getActiveProfiles()).contains("local");
-    }
-    
-    private void waitForServiceRegistration() throws InterruptedException {
-        while (discoveryClient.getInstances("user-repository").isEmpty()){
-            Thread.sleep(1000);
-            log.info(discoveryClient.getServices());
-        }
-    }
-    
-    private String getUrl() {
-        if (isCloudConfigEnabled()) {
-            List<ServiceInstance> instances = discoveryClient.getInstances("user-repository");
-            if (CollectionUtils.isNotEmpty(instances)) {
-                log.info(instances.get(0).getUri());
-                // TODO register service with context path
-                return instances.get(0).getUri().toString()+"/user-repository"; 
-            }
-        }
-        return null;
-    }
+    private DiscoveryClient discoveryClient;
 
     @Test
     public void helloLocal() {
         Assume.assumeFalse(isCloudConfigEnabled());
-        HttpHeaders headers = createHeaders();
-        ResponseEntity<String> response = new TestRestTemplate().exchange(url + "/hello/test", HttpMethod.GET,
-                new HttpEntity<>(headers), String.class);
-        Assert.assertEquals(HttpStatus.OK, response.getStatusCode());
-        log.info("response: " + response.getBody());
-        Assert.assertTrue(response.getBody().contains("Hello"));
-        Assert.assertTrue(response.getBody().contains("localRole"));
+        String body = get(url + "/hello/test", MediaType.TEXT_PLAIN);
+        Assert.assertTrue(body.contains("Hello"));
+        Assert.assertTrue(body.contains("localRole"));
     }
+
     @Test
     public void helloRemote() throws InterruptedException {
         Assume.assumeTrue(isCloudConfigEnabled());
         waitForServiceRegistration();
-//        Thread.sleep(5000);
-        HttpHeaders headers = createHeaders();
-        log.info(getUrl());
-        ResponseEntity<String> response = new TestRestTemplate().exchange(getUrl() + "/hello/test", HttpMethod.GET,
-                new HttpEntity<>(headers), String.class);
-        Assert.assertEquals(HttpStatus.OK, response.getStatusCode());
-        log.info("response: " + response.getBody());
-        Assert.assertTrue(response.getBody().contains("Hello"));
-        Assert.assertTrue(response.getBody().contains("Developer"));
+        String body = get(getUrl() + "/hello/test", MediaType.TEXT_PLAIN);
+        Assert.assertTrue(body.contains("Hello"));
+        Assert.assertTrue(body.contains("Remote"));
     }
 
     @Test
     public void discoveryServer() throws InterruptedException {
         Assume.assumeTrue(isCloudConfigEnabled());
         waitForServiceRegistration();
-//        Thread.sleep(5000);
-        HttpHeaders headers = createHeaders();
-        headers.setAccept(Collections.singletonList(MediaType.APPLICATION_XML));
-        log.debug("test discoveryServer");
-        ResponseEntity<String> response = new TestRestTemplate().exchange(
-                "http://localhost:8081/config-server/eureka/apps", HttpMethod.GET, new HttpEntity<>(headers),
-                String.class);
-        Assert.assertEquals(HttpStatus.OK, response.getStatusCode());
-        Assert.assertTrue(response.getBody().contains("user-repository"));
+        String body = get("http://localhost:8081/config-server/eureka/apps", MediaType.APPLICATION_XML);
+        Assert.assertTrue(body.contains("user-repository"));
     }
 
-    private HttpHeaders createHeaders() {
+    @Test
+    public void envActuatorLocal() throws ClientProtocolException, IOException {
+        Assume.assumeFalse(isCloudConfigEnabled());
+        String body = get(url + "/actuator/env", null);
+        Assert.assertTrue(body.contains("user.role"));
+        Assert.assertTrue(body.contains("localRole"));
+    }
+
+    private String get(String url, MediaType mediaType) {
         HttpHeaders headers = new HttpHeaders();
-        headers.setAccept(Collections.singletonList(MediaType.TEXT_PLAIN));
-        return headers;
+        if (mediaType != null) {
+            headers.setAccept(Collections.singletonList(mediaType));
+        }
+        ResponseEntity<String> response = new TestRestTemplate().exchange(url, HttpMethod.GET,
+                new HttpEntity<>(headers), String.class);
+        log.debug(response.getBody());
+        Assert.assertEquals(HttpStatus.OK, response.getStatusCode());
+        return response.getBody();
+    }
+
+    private boolean isCloudConfigEnabled() {
+        return !Arrays.asList(environment.getActiveProfiles()).contains("local");
+    }
+
+    private void waitForServiceRegistration() throws InterruptedException {
+        while (discoveryClient.getInstances("user-repository").isEmpty()) {
+            Thread.sleep(1000);
+            log.info(discoveryClient.getServices());
+        }
+    }
+
+    private String getUrl() {
+        if (isCloudConfigEnabled()) {
+            List<ServiceInstance> instances = discoveryClient.getInstances("user-repository");
+            if (CollectionUtils.isNotEmpty(instances)) {
+                log.info(instances.get(0).getUri());
+                // TODO register service with context path
+                return instances.get(0).getUri().toString() + "/user-repository";
+            }
+        }
+        return null;
     }
 }

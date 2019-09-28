@@ -57,3 +57,12 @@ or
 java -jar config-server/target/config-server-0.1-SNAPSHOT.jar
 java -jar user-repository/target/user-repository-0.1-SNAPSHOT.jar
 ```
+
+### Test config server:
+[discovery service](http://localhost:8081/config-server/)
+[config service](http://localhost:8081/config-server/user-repository-default.properties)
+
+### Test user-repository:
+[hello](http://localhost:8082/user-repository/hello/test)
+[users](http://localhost:8082/user-repository/api/rest/users)
+
