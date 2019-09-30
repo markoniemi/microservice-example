@@ -1,0 +1,23 @@
+version: '3'
+services:
+  config:
+    image: markoniemi/config-server
+    ports:
+      - 8081:8081
+    networks:
+      - spring-cloud
+  user-repository:
+    depends_on:
+      - config
+    image: markoniemi/user-repository
+    ports:
+      - 8082:8082
+    links:
+      - config:config
+    networks:
+      - spring-cloud
+    environment:
+      - SPRING_CLOUD_CONFIG_URI=http://config:8081/config-server/user-repository
+      - SERVICE_URL_DEFAULT_ZONE=http://config:8081/config-server/eureka/
+networks:
+  spring-cloud:
