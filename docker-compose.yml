@@ -1,23 +1,28 @@
-version: '3'
+version: '2.1'
 services:
   config:
+    container_name: config
     image: markoniemi/config-server
+    build: config-server
     ports:
       - 8081:8081
     networks:
-      - spring-cloud
+      - microservice-example
   user-repository:
-    depends_on:
-      - config
+    container_name: user-repository
     image: markoniemi/user-repository
+    build: user-repository
     ports:
       - 8082:8082
     links:
       - config:config
     networks:
-      - spring-cloud
+      - microservice-example
     environment:
       - SPRING_CLOUD_CONFIG_URI=http://config:8081/config-server/user-repository
       - SERVICE_URL_DEFAULT_ZONE=http://config:8081/config-server/eureka/
+    depends_on:
+      config:
+        condition: service_healthy
 networks:
-  spring-cloud:
+  microservice-example:
