@@ -1,5 +1,13 @@
 version: '2.1'
 services:
+  discovery:
+    container_name: discovery
+    image: markoniemi/discovery
+    build: discovery
+    ports:
+      - 8761:8761
+    networks:
+      - microservice-example
   config:
     container_name: config
     image: markoniemi/config-server
@@ -8,6 +16,11 @@ services:
       - 8081:8081
     networks:
       - microservice-example
+    environment:
+      - SERVICE_URL_DEFAULT_ZONE=http://discovery:8761/eureka/
+    depends_on:
+      discovery:
+        condition: service_healthy
   user-repository:
     container_name: user-repository
     image: markoniemi/user-repository
@@ -19,8 +32,7 @@ services:
     networks:
       - microservice-example
     environment:
-      - SPRING_CLOUD_CONFIG_URI=http://config:8081/config-server/user-repository
-      - SERVICE_URL_DEFAULT_ZONE=http://config:8081/config-server/eureka/
+      - SERVICE_URL_DEFAULT_ZONE=http://discovery:8761/eureka/
     depends_on:
       config:
         condition: service_healthy

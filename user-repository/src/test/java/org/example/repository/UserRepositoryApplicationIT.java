@@ -67,7 +67,7 @@ public class UserRepositoryApplicationIT {
     public void discoveryServer() throws InterruptedException {
         Assume.assumeTrue(isCloudConfigEnabled());
         waitForServiceRegistration();
-        String body = get("http://localhost:8081/config-server/eureka/apps", MediaType.APPLICATION_XML);
+        String body = get("http://localhost:8761/eureka/apps", MediaType.APPLICATION_XML);
         Assert.assertTrue(body.contains("user-repository"));
     }
 

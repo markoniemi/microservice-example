@@ -1,4 +1,4 @@
-package example.configserver;
+package example.discovery;
 
 import java.util.Collections;
 
@@ -14,25 +14,23 @@ import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.ContextHierarchy;
 import org.springframework.test.context.junit4.SpringRunner;
 
-import example.configserver.config.ApplicationConfig;
+import example.discovery.config.ApplicationConfig;
 
-@RunWith(SpringRunner.class)
-@SpringBootTest(classes = ConfigServerApplication.class, webEnvironment = WebEnvironment.DEFINED_PORT)
-@ContextHierarchy(@ContextConfiguration(classes = ApplicationConfig.class))
-@ActiveProfiles({ "local", "native" })
-public class ConfigServerApplicationIT {
-    private String url = "http://localhost:8081/";
+//@RunWith(SpringRunner.class)
+//@SpringBootTest(classes = DiscoveryServerApplication.class, webEnvironment = WebEnvironment.DEFINED_PORT)
+//@ContextHierarchy(@ContextConfiguration(classes = ApplicationConfig.class))
+public class DiscoveryServerApplicationIT {
+    private String url = "http://localhost:8761/";
 
     @Test
     public void getConfig() {
-        String body = get(url + "/user-repository/default", MediaType.APPLICATION_JSON);
-        Assert.assertTrue(body.contains("Remote"));
-        Assert.assertTrue(body.contains("user.role"));
+        String body = get(url + "eureka/apps", MediaType.APPLICATION_XML);
+        System.out.println(body);
+        Assert.assertTrue(body.contains("applications"));
     }
 
     private String get(String url, MediaType mediaType) {

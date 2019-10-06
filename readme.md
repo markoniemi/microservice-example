@@ -66,3 +66,22 @@ java -jar user-repository/target/user-repository-0.1-SNAPSHOT.jar
 [hello](http://localhost:8082/user-repository/hello/test)
 [users](http://localhost:8082/user-repository/api/rest/users)
 
+
+@startuml
+
+title Spring Cloud
+
+package config-server {
+    [spring-config]
+    [<<service-discovery>>\nEureka]
+}
+[<<service-discovery>>\nEureka] -up- registry
+[spring-config] -right-> registry: register
+[spring-config] -up- config
+[user-repository] --> config: read
+[user-repository] --> registry: read & register
+[spring-config] -down-> [github]
+[spring-config] -down-> [filesystem]
+[spring-config] -down-> [<<config>>\nConsul]
+
+@enduml
