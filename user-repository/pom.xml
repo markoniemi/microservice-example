@@ -84,7 +84,7 @@
             </goals>
             <configuration>
               <url>http://localhost:8761/eureka/apps/CONFIGSERVER</url>
-              <timeout>20000</timeout>
+              <timeout>40000</timeout>
               <headers>
                 <Content-Type>application/json;charset=UTF-8</Content-Type>
               </headers>
