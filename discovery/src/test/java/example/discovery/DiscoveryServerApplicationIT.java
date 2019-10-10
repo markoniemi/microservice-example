@@ -20,9 +20,9 @@ import org.springframework.test.context.junit4.SpringRunner;
 
 import example.discovery.config.ApplicationConfig;
 
-//@RunWith(SpringRunner.class)
-//@SpringBootTest(classes = DiscoveryServerApplication.class, webEnvironment = WebEnvironment.DEFINED_PORT)
-//@ContextHierarchy(@ContextConfiguration(classes = ApplicationConfig.class))
+@RunWith(SpringRunner.class)
+@SpringBootTest(classes = DiscoveryServerApplication.class, webEnvironment = WebEnvironment.DEFINED_PORT)
+@ContextHierarchy(@ContextConfiguration(classes = ApplicationConfig.class))
 public class DiscoveryServerApplicationIT {
     private String url = "http://localhost:8761/";
 
