@@ -1,5 +1,5 @@
 version: v1.0
-name: cloud-config-example
+name: microservice-example
 agent:
   machine:
     type: e1-standard-2

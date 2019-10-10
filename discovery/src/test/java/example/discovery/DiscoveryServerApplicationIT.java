@@ -24,11 +24,11 @@ import example.discovery.config.ApplicationConfig;
 @SpringBootTest(classes = DiscoveryServerApplication.class, webEnvironment = WebEnvironment.DEFINED_PORT)
 @ContextHierarchy(@ContextConfiguration(classes = ApplicationConfig.class))
 public class DiscoveryServerApplicationIT {
-    private String url = "http://localhost:8761/";
+    private String url = "http://localhost:8761";
 
     @Test
     public void getConfig() {
-        String body = get(url + "eureka/apps", MediaType.APPLICATION_XML);
+        String body = get(url + "/eureka/apps", MediaType.APPLICATION_XML);
         System.out.println(body);
         Assert.assertTrue(body.contains("applications"));
     }

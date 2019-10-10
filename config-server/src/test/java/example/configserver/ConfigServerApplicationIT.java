@@ -26,7 +26,7 @@ import example.configserver.config.ApplicationConfig;
 @ContextHierarchy(@ContextConfiguration(classes = ApplicationConfig.class))
 @ActiveProfiles({ "local", "native" })
 public class ConfigServerApplicationIT {
-    private String url = "http://localhost:8081/";
+    private String url = "http://localhost:8081";
 
     @Test
     public void getConfig() {

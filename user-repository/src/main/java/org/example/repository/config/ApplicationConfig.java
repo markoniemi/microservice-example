@@ -6,6 +6,6 @@ import org.springframework.context.annotation.Import;
 
 @Configuration
 @ComponentScan(basePackages = "org.example")
-@Import({ TomcatConfig.class, DiscoveryClientConfig.class, UserRepositoryConfig.class })
+@Import({ DiscoveryClientConfig.class, UserRepositoryConfig.class })
 public class ApplicationConfig {
 }

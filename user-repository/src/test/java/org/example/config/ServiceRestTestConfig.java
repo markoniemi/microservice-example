@@ -15,7 +15,7 @@ import org.springframework.context.support.PropertySourcesPlaceholderConfigurer;
 //@Configuration
 //@PropertySource("classpath:server.properties")
 public class ServiceRestTestConfig {
-    @Value("http://localhost:8082/user-repository/api/rest/")
+    @Value("http://localhost:8082/api/rest/")
 //    @Value("${http.protocol}://localhost:${http.port}/user-repository/api/rest/")
     private String baseAddress;
     @Bean

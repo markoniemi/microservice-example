@@ -5,8 +5,6 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
-import javax.annotation.Resource;
-
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.http.client.ClientProtocolException;
 import org.example.repository.config.ApplicationConfig;
@@ -27,6 +25,7 @@ import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.ContextHierarchy;
 import org.springframework.test.context.junit4.SpringRunner;
@@ -39,8 +38,7 @@ import lombok.extern.log4j.Log4j2;
 //@ActiveProfiles("local")
 @Log4j2
 public class UserRepositoryApplicationIT {
-    @Resource
-    private String url;
+    private String url="http://localhost:8082";
     @Autowired
     private Environment environment;
     @Autowired
@@ -107,8 +105,7 @@ public class UserRepositoryApplicationIT {
             List<ServiceInstance> instances = discoveryClient.getInstances("user-repository");
             if (CollectionUtils.isNotEmpty(instances)) {
                 log.info(instances.get(0).getUri());
-                // TODO register service with context path
-                return instances.get(0).getUri().toString() + "/user-repository";
+                return instances.get(0).getUri().toString();
             }
         }
         return null;

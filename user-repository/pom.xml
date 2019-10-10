@@ -89,20 +89,6 @@
               </headers>
             </configuration>
           </execution>
-<!--           <execution> -->
-<!--             <id>wait-config-server</id> -->
-<!--             <phase>pre-integration-test</phase> -->
-<!--             <goals> -->
-<!--               <goal>wait</goal> -->
-<!--             </goals> -->
-<!--             <configuration> -->
-<!--               <url>http://localhost:8081/user-repository/default</url> -->
-<!--               <timeout>20000</timeout> -->
-<!--               <headers> -->
-<!--                 <Content-Type>application/json;charset=UTF-8</Content-Type> -->
-<!--               </headers> -->
-<!--             </configuration> -->
-<!--           </execution> -->
         </executions>
       </plugin>
     </plugins>
