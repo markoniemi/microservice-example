@@ -3,7 +3,7 @@
   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
   xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
   <modelVersion>4.0.0</modelVersion>
-  <artifactId>user-repository</artifactId>
+  <artifactId>user-application</artifactId>
   <parent>
     <groupId>org.cloud-config</groupId>
     <artifactId>microservice-example</artifactId>
@@ -18,7 +18,7 @@
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-maven-plugin</artifactId>
         <configuration>
-          <mainClass>org.example.repository.UserRepositoryApplication</mainClass>
+          <mainClass>org.example.repository.UserApplication</mainClass>
         </configuration>
         <executions>
           <execution>
@@ -65,6 +65,23 @@
                 <argument>-Dspring.profiles.active=native</argument>
                 <argument>-jar</argument>
                 <argument>config-server-0.1-SNAPSHOT.jar</argument>
+              </arguments>
+            </configuration>
+          </execution>
+          <execution>
+            <id>user-repository</id>
+            <phase>pre-integration-test</phase>
+            <goals>
+              <goal>exec</goal>
+            </goals>
+            <configuration>
+              <executable>java</executable>
+              <workingDirectory>../user-repository/target</workingDirectory>
+              <async>true</async>
+              <asyncDestroyOnShutdown>true</asyncDestroyOnShutdown>
+              <arguments>
+                <argument>-jar</argument>
+                <argument>user-repository-0.1-SNAPSHOT.jar</argument>
               </arguments>
             </configuration>
           </execution>
@@ -142,6 +159,11 @@
   </profiles>
   <dependencies>
     <dependency>
+      <groupId>org.cloud-config</groupId>
+      <artifactId>user-api</artifactId>
+      <version>${project.version}</version>
+    </dependency>
+    <dependency>
       <groupId>org.springframework.cloud</groupId>
       <artifactId>spring-cloud-starter-config</artifactId>
     </dependency>
@@ -150,12 +172,47 @@
       <artifactId>spring-boot-starter-web</artifactId>
     </dependency>
     <dependency>
+      <groupId>org.apache.tomcat.embed</groupId>
+      <artifactId>tomcat-embed-jasper</artifactId>
+      <scope>provided</scope>
+    </dependency>
+    <dependency>
+      <groupId>javax.servlet</groupId>
+      <artifactId>jstl</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>org.springframework.boot</groupId>
+      <artifactId>spring-boot-starter-security</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>org.springframework.security</groupId>
+      <artifactId>spring-security-web</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>org.springframework.security</groupId>
+      <artifactId>spring-security-taglibs</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>org.webjars</groupId>
+      <artifactId>bootstrap</artifactId>
+      <version>3.3.6</version>
+    </dependency>
+    <dependency>
+      <groupId>org.webjars</groupId>
+      <artifactId>jquery</artifactId>
+      <version>2.1.1</version>
+    </dependency>
+    <dependency>
+      <groupId>org.springframework.cloud</groupId>
+      <artifactId>spring-cloud-starter-netflix-eureka-client</artifactId>
+    </dependency>
+    <dependency>
       <groupId>org.springframework.boot</groupId>
       <artifactId>spring-boot-starter-actuator</artifactId>
     </dependency>
     <dependency>
-      <groupId>org.springframework.boot</groupId>
-      <artifactId>spring-boot-starter-data-jpa</artifactId>
+      <groupId>org.springframework.cloud</groupId>
+      <artifactId>spring-cloud-starter-openfeign</artifactId>
     </dependency>
     <!-- Apache CXF dependencies -->
     <dependency>
@@ -179,17 +236,8 @@
       <artifactId>lombok</artifactId>
     </dependency>
     <dependency>
-      <groupId>com.h2database</groupId>
-      <artifactId>h2</artifactId>
-    </dependency>
-    <dependency>
       <groupId>org.springframework.boot</groupId>
       <artifactId>spring-boot-starter-test</artifactId>
-      <scope>test</scope>
-    </dependency>
-    <dependency>
-      <groupId>org.springframework.cloud</groupId>
-      <artifactId>spring-cloud-starter-openfeign</artifactId>
       <scope>test</scope>
     </dependency>
   </dependencies>
