@@ -13,7 +13,7 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.stereotype.Component;
 
-import example.user.service.UserService;
+import example.user.service.UserClient;
 import lombok.extern.log4j.Log4j2;
 
 /**
@@ -29,7 +29,7 @@ import lombok.extern.log4j.Log4j2;
 @Component
 public class UserRepositoryAuthenticationProvider implements AuthenticationProvider {
     @Resource
-    UserService userService;
+    UserClient userService;
 
     /**
      * Authenticate using UserRepository.

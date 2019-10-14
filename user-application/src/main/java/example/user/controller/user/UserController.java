@@ -23,7 +23,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
 import example.user.controller.UserValidator;
-import example.user.service.UserService;
+import example.user.service.UserClient;
 import lombok.extern.log4j.Log4j2;
 
 @Log4j2
@@ -33,7 +33,7 @@ public class UserController {
     private MessageSource messageSource;
 //    @Resource
     @Autowired
-    private UserService userService;
+    private UserClient userService;
     @Resource
     private UserValidator userValidator;
 

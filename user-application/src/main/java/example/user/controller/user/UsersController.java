@@ -9,13 +9,13 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
-import example.user.service.UserService;
+import example.user.service.UserClient;
 
 @Controller
 public class UsersController {
 //    @Resource
     @Autowired
-    private UserService userService;
+    private UserClient userService;
 
     @RequestMapping(value = "/user/users", method = RequestMethod.GET)
     public ModelAndView users() {
