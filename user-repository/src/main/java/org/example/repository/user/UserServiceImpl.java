@@ -1,11 +1,8 @@
 package org.example.repository.user;
 
 import javax.annotation.Resource;
-import javax.ws.rs.Path;
 
 import org.apache.commons.lang.Validate;
-//import org.springframework.data.rest.webmvc.RepositoryRestController;
-import org.springframework.stereotype.Service;
 
 import lombok.extern.log4j.Log4j2;
 
@@ -18,11 +15,11 @@ import lombok.extern.log4j.Log4j2;
  * adds proper names to parameters in WSDL. endpointInterface and serviceName
  * are probably unneccessary.
  */
-@Service
+//@Service
 @Log4j2
 // @WebService(endpointInterface = "org.survey.service.user.UserService",
 // serviceName = "userService")
-@Path("/users")
+//@Path("/users")
 public class UserServiceImpl implements UserService {
     @Resource
     private UserRepository userRepository;
