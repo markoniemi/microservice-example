@@ -30,7 +30,6 @@ import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.ContextHierarchy;
 import org.springframework.test.context.junit4.SpringRunner;
@@ -134,6 +133,7 @@ public class UserRepositoryApplicationIT {
         return !Arrays.asList(environment.getActiveProfiles()).contains("local");
     }
 
+    @SuppressWarnings("squid:S2925")
     private void waitForServiceRegistration() throws InterruptedException {
         while (discoveryClient.getInstances("user-repository").isEmpty()) {
             Thread.sleep(1000);

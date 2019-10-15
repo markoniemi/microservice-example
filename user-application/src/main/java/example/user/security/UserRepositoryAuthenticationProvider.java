@@ -43,7 +43,7 @@ public class UserRepositoryAuthenticationProvider implements AuthenticationProvi
 
     private Authentication authenticateUser(User user, Authentication authentication) {
         if (user != null && authentication.getCredentials().equals(user.getPassword())) {
-            List<GrantedAuthority> authorities = new ArrayList<GrantedAuthority>();
+            List<GrantedAuthority> authorities = new ArrayList<>();
             authorities.add(new SimpleGrantedAuthority(user.getRole().name()));
             return new UsernamePasswordAuthenticationToken(authentication.getName(), authentication.getCredentials(),
                     authorities);
