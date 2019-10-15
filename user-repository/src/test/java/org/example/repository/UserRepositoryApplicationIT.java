@@ -71,7 +71,7 @@ public class UserRepositoryApplicationIT {
     }
     @Test
     public void create() {
-        User user = userClient.update(new User("user","user","email", Role.ROLE_USER));
+        User user = userClient.create(new User("user","user","email", Role.ROLE_USER));
         Assert.assertNotNull(user);
         Assert.assertEquals("user", user.getUsername());
         user = userClient.findById(user.getId());

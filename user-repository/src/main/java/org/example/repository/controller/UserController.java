@@ -2,64 +2,82 @@ package org.example.repository.controller;
 
 import javax.annotation.Resource;
 
+import org.apache.commons.lang.Validate;
 import org.example.repository.user.User;
-import org.example.repository.user.UserService;
-import org.example.repository.user.UserServiceImpl;
+import org.example.repository.user.UserRepository;
 import org.springframework.http.MediaType;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import lombok.extern.log4j.Log4j2;
+
 @RestController
 @RequestMapping("/api/rest")
-public class UserController extends UserServiceImpl {
+@Log4j2
+public class UserController {
     @Resource
-    private UserService userService;
+    private UserRepository userRepository;
 
-    @RequestMapping(value = "/users", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+    @GetMapping(value = "/users")
     public User[] findAll() {
-        return super.findAll();
+        log.trace("findAll");
+        return userRepository.findAll().toArray(new User[0]);
     }
 
-    @RequestMapping(value = "/users", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
+    @PostMapping(value = "/users")
     public User create(@RequestBody User user) {
-        return super.create(user);
+        log.trace("create: {}", user);
+        return userRepository.save(user);
     }
 
-    @RequestMapping(value = "/users", method = RequestMethod.PUT, produces = MediaType.APPLICATION_JSON_VALUE)
+    @PutMapping(value = "/users")
     public User update(@RequestBody User user) {
-        return super.create(user);
+        User databaseUser = userRepository.findByUsername(user.getUsername());
+        Validate.notNull(databaseUser, "User does not exist.");
+        databaseUser.setEmail(user.getEmail());
+        databaseUser.setPassword(user.getPassword());
+        databaseUser.setRole(user.getRole());
+        databaseUser.setUsername(user.getUsername());
+        log.trace("update: {}", databaseUser);
+        return userRepository.save(databaseUser);
     }
 
-    @RequestMapping(value = "/users/{id}", method = RequestMethod.DELETE, produces = MediaType.APPLICATION_JSON_VALUE)
+    @DeleteMapping(value = "/users/{id}")
     public void delete(@PathVariable("id") Long id) {
-        super.delete(id);
+        if (userRepository.existsById(id)) {
+            userRepository.deleteById(id);
+        }
     }
 
-    @RequestMapping(value = "/users/{id}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+    @GetMapping(value = "/users/{id}")
     public User findById(@PathVariable("id") Long id) {
-        return super.findById(id);
+        return userRepository.findById(id).orElse(null);
     }
 
-    @RequestMapping(value = "/users/username/{username}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+    @GetMapping(value = "/users/username/{username}")
     public User findByUsername(@PathVariable("username") String username) {
-        return super.findByUsername(username);
+        return userRepository.findByUsername(username);
     }
 
-    @RequestMapping(value = "/users/email/{email}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+    @GetMapping(value = "/users/email/{email}")
     public User findByEmail(@PathVariable("email") String email) {
-        return super.findByEmail(email);
+        return userRepository.findByEmail(email);
     }
 
-    @RequestMapping(value = "/users/exists/{id}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+    @GetMapping(value = "/users/exists/{id}")
     public boolean exists(@PathVariable("id") Long id) {
-        return super.exists(id);
+        return userRepository.existsById(id);
     }
 
-    @RequestMapping(value = "/users/count", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+    @GetMapping(value = "/users/count")
     public long count() {
-        return super.count();
+        return userRepository.count();
     }
 }
