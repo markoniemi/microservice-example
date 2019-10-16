@@ -30,8 +30,7 @@ import lombok.extern.log4j.Log4j2;
 public class UserController {
     @Autowired
     private MessageSource messageSource;
-//    @Resource
-    @Autowired
+    @Resource
     private UserClient userService;
     @Resource
     private UserValidator userValidator;

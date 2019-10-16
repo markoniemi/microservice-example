@@ -71,17 +71,23 @@ java -jar user-repository/target/user-repository-0.1-SNAPSHOT.jar
 
 title Spring Cloud
 
-package config-server {
+package infrastructure {
     [spring-config]
-    [<<service-discovery>>\nEureka]
+    [<<service-discovery>>\nEureka] as eureka
+    [github]
+    [filesystem]
+    [Consul] as consul
 }
-[<<service-discovery>>\nEureka] -up- registry
+eureka -up- registry
 [spring-config] -right-> registry: register
 [spring-config] -up- config
+[user-repository] -right- UserApi
+[user-application] -left-> UserApi
 [user-repository] --> config: read
 [user-repository] --> registry: read & register
+[user-application] --> registry: read
 [spring-config] -down-> [github]
 [spring-config] -down-> [filesystem]
-[spring-config] -down-> [<<config>>\nConsul]
+[spring-config] -down-> consul
 
 @enduml
