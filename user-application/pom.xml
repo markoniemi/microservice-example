@@ -99,8 +99,8 @@
               <goal>wait</goal>
             </goals>
             <configuration>
-              <url>http://localhost:8761/eureka/apps/CONFIGSERVER</url>
-              <timeout>90000</timeout>
+              <url>http://localhost:8761/eureka/apps/USER-REPOSITORY</url>
+              <timeout>120000</timeout>
               <headers>
                 <Content-Type>application/json;charset=UTF-8</Content-Type>
               </headers>
@@ -214,18 +214,13 @@
       <groupId>org.springframework.cloud</groupId>
       <artifactId>spring-cloud-starter-openfeign</artifactId>
     </dependency>
-    <!-- Apache CXF dependencies -->
     <dependency>
-      <groupId>org.apache.cxf</groupId>
-      <artifactId>cxf-spring-boot-starter-jaxrs</artifactId>
+      <groupId>com.fasterxml.jackson.jaxrs</groupId>
+      <artifactId>jackson-jaxrs-json-provider</artifactId>
     </dependency>
     <dependency>
-    <groupId>com.fasterxml.jackson.jaxrs</groupId>
-    <artifactId>jackson-jaxrs-json-provider</artifactId>
-    </dependency>
-    <dependency>
-    <groupId>com.fasterxml.jackson.jaxrs</groupId>
-    <artifactId>jackson-jaxrs-xml-provider</artifactId>
+      <groupId>com.fasterxml.jackson.jaxrs</groupId>
+      <artifactId>jackson-jaxrs-xml-provider</artifactId>
     </dependency>
     <dependency>
       <groupId>com.fasterxml.jackson.core</groupId>
@@ -239,6 +234,29 @@
       <groupId>org.springframework.boot</groupId>
       <artifactId>spring-boot-starter-test</artifactId>
       <scope>test</scope>
+    </dependency>
+    <!-- selenium -->
+    <dependency>
+      <groupId>org.springframework.boot</groupId>
+      <artifactId>spring-boot-starter-test</artifactId>
+      <scope>test</scope>
+    </dependency>
+    <!-- Selenium -->
+    <dependency>
+      <groupId>org.seleniumhq.selenium</groupId>
+      <artifactId>selenium-java</artifactId>
+      <scope>test</scope>
+    </dependency>
+    <dependency>
+      <groupId>io.github.bonigarcia</groupId>
+      <artifactId>webdrivermanager</artifactId>
+      <version>3.7.1</version>
+      <exclusions>
+        <exclusion>
+          <groupId>ch.qos.logback</groupId>
+          <artifactId>logback-classic</artifactId>
+        </exclusion>
+      </exclusions>
     </dependency>
   </dependencies>
 </project>

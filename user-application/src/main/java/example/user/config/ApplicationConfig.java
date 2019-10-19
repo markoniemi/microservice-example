@@ -11,18 +11,11 @@ import org.springframework.context.support.PropertySourcesPlaceholderConfigurer;
 import org.springframework.web.servlet.LocaleResolver;
 import org.springframework.web.servlet.i18n.SessionLocaleResolver;
 
-import feign.Logger;
-
 @Configuration
-@ComponentScan(basePackages = {"example.user"})
+@ComponentScan(basePackages = { "example.user" })
 @EnableEurekaClient
-@EnableFeignClients(basePackages = {"example.user"})
+@EnableFeignClients(basePackages = { "example.user.service" })
 public class ApplicationConfig {
-    @Bean
-    Logger.Level feignLoggerLevel() {
-        return Logger.Level.FULL;
-    }
-    
     @Bean
     public LocaleResolver localeResolver() {
         SessionLocaleResolver slr = new SessionLocaleResolver();

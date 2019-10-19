@@ -25,6 +25,7 @@ import org.springframework.http.ResponseEntity;
 import lombok.extern.log4j.Log4j2;
 
 @Log4j2
+// TODO split into two tests, DiscoveryIT and ConfigIT
 public class UserRepositoryApplicationIT extends AbstractIntegrationTestBase {
     private String url = "http://localhost:8082";
     @Autowired
