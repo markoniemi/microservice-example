@@ -1,7 +1,5 @@
 package example.user.service;
 
-import org.example.repository.user.User;
-import org.example.repository.user.UserService;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -10,6 +8,9 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+
+import example.repository.user.User;
+import example.repository.user.UserService;
 
 @Service
 @FeignClient(name = "user-repository", path = "/api/rest")

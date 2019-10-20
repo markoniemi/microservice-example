@@ -18,7 +18,7 @@
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-maven-plugin</artifactId>
         <configuration>
-          <mainClass>org.example.repository.UserApplication</mainClass>
+          <mainClass>example.repository.UserApplication</mainClass>
         </configuration>
         <executions>
           <execution>
