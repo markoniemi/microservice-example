@@ -1,4 +1,4 @@
-package org.example.repository;
+package org.example;
 
 import java.io.IOException;
 import java.util.Arrays;
@@ -25,21 +25,10 @@ import org.springframework.http.ResponseEntity;
 import lombok.extern.log4j.Log4j2;
 
 @Log4j2
-// TODO split into two tests, DiscoveryIT and ConfigIT
-public class UserRepositoryApplicationIT extends AbstractIntegrationTestBase {
+public class ConfigIT extends AbstractIntegrationTestBase {
     private String url = "http://localhost:8082";
     @Autowired
-    private Environment environment;
-    @Autowired
     private DiscoveryClient discoveryClient;
-
-    @Test
-    public void discoveryServer() throws InterruptedException {
-        Assume.assumeTrue(isCloudConfigEnabled());
-        waitForServiceRegistration();
-        String body = get("http://localhost:8761/eureka/apps", MediaType.APPLICATION_XML);
-        Assert.assertTrue(body.contains("user-repository"));
-    }
 
     @Test
     public void envActuatorLocal() throws ClientProtocolException, IOException {
@@ -47,30 +36,6 @@ public class UserRepositoryApplicationIT extends AbstractIntegrationTestBase {
         String body = get(url + "/actuator/env", null);
         Assert.assertTrue(body.contains("user.role"));
         Assert.assertTrue(body.contains("localRole"));
-    }
-
-    private String get(String url, MediaType mediaType) {
-        HttpHeaders headers = new HttpHeaders();
-        if (mediaType != null) {
-            headers.setAccept(Collections.singletonList(mediaType));
-        }
-        ResponseEntity<String> response = new TestRestTemplate().exchange(url, HttpMethod.GET,
-                new HttpEntity<>(headers), String.class);
-        log.debug(response.getBody());
-        Assert.assertEquals(HttpStatus.OK, response.getStatusCode());
-        return response.getBody();
-    }
-
-    private boolean isCloudConfigEnabled() {
-        return !Arrays.asList(environment.getActiveProfiles()).contains("local");
-    }
-
-    @SuppressWarnings("squid:S2925")
-    private void waitForServiceRegistration() throws InterruptedException {
-        while (discoveryClient.getInstances("user-repository").isEmpty()) {
-            Thread.sleep(1000);
-            log.info(discoveryClient.getServices());
-        }
     }
 
     private String getUrl() {

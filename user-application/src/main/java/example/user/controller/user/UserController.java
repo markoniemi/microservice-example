@@ -5,6 +5,7 @@ import java.util.Map;
 
 import javax.annotation.Resource;
 
+import org.apache.commons.lang3.StringUtils;
 import org.example.repository.user.Role;
 import org.example.repository.user.User;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -67,8 +68,11 @@ public class UserController {
 
     @GetMapping(value = "/user/{username}")
     public ModelAndView editUser(@PathVariable String username) {
-        User user = userService.findByUsername(username);
-        log.debug("editUser() - found user: " + user);
+        User user = null;
+        if (StringUtils.isNotBlank(username)) {
+            user = userService.findByUsername(username);
+            log.debug("editUser() - found user: " + user);
+        }
         if (user == null) {
             user = new User();
         }

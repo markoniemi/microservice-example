@@ -2,7 +2,7 @@ package org.example;
 
 import javax.annotation.Resource;
 
-import org.example.repository.AbstractIntegrationTestBase;
+import org.example.repository.user.Role;
 import org.example.selenium.LoginPage;
 import org.example.selenium.UserPage;
 import org.example.selenium.UsersPage;
@@ -38,21 +38,20 @@ public class UserApplicationIT extends AbstractIntegrationTestBase {
     public void integrationTest() throws InterruptedException {
         webDriver.get(loginUrl);
         loginPage.login("admin", "admin");
-        // TODO remove comments
-//        usersPage.clickAddUser();
-//        userPage.addUser("admin_user", "admin_user@test.com", "another", Role.ROLE_ADMIN);
-//        usersPage.assertUserRole("admin_user", "Admin");
-//        usersPage.clickAddUser();
-//        userPage.addUser("user_user", "user_user@test.com", "another", Role.ROLE_USER);
-//        usersPage.assertUserRole("user_user", "User");
-//        usersPage.deleteUser("user_user");
-//        usersPage.logout();
-//        loginPage.login("admin_user", "another");
-//        usersPage.editUser("admin_user");
-//        userPage.editUser("admin_user", "newpassword");
-//        usersPage.logout();
-//        loginPage.login("admin_user", "newpassword");
-//        usersPage.deleteUser("admin_user");
+        usersPage.clickAddUser();
+        userPage.addUser("admin_user", "admin_user@test.com", "another", Role.ROLE_ADMIN);
+        usersPage.assertUserRole("admin_user", "Admin");
+        usersPage.clickAddUser();
+        userPage.addUser("user_user", "user_user@test.com", "another", Role.ROLE_USER);
+        usersPage.assertUserRole("user_user", "User");
+        usersPage.deleteUser("user_user");
+        usersPage.logout();
+        loginPage.login("admin_user", "another");
+        usersPage.editUser("admin_user");
+        userPage.editUser("admin_user", "newpassword");
+        usersPage.logout();
+        loginPage.login("admin_user", "newpassword");
+        usersPage.deleteUser("admin_user");
         usersPage.logout();
     }
 
