@@ -26,16 +26,23 @@ import lombok.extern.log4j.Log4j2;
 
 @Log4j2
 public class ConfigIT extends AbstractIntegrationTestBase {
-    private String url = "http://localhost:8082";
+    private String url = "http://localhost:8083";
     @Autowired
     private DiscoveryClient discoveryClient;
 
     @Test
-    public void envActuatorLocal() throws ClientProtocolException, IOException {
+    public void localConfig() throws ClientProtocolException, IOException {
         Assume.assumeFalse(isCloudConfigEnabled());
         String body = get(url + "/actuator/env", null);
-        Assert.assertTrue(body.contains("user.role"));
-        Assert.assertTrue(body.contains("localRole"));
+        Assert.assertTrue(body.contains("runtime.environment"));
+        Assert.assertTrue(body.contains("local"));
+    }
+    @Test
+    public void remoteConfig() throws ClientProtocolException, IOException {
+        Assume.assumeTrue(isCloudConfigEnabled());
+        String body = get(url + "/actuator/env", null);
+        Assert.assertTrue(body.contains("runtime.environment"));
+        Assert.assertTrue(body.contains("remote"));
     }
 
     private String getUrl() {

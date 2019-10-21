@@ -8,12 +8,16 @@ import org.junit.Test;
 import org.openqa.selenium.WebDriver;
 
 import example.repository.user.Role;
+import example.repository.user.User;
 import example.selenium.LoginPage;
 import example.selenium.UserPage;
 import example.selenium.UsersPage;
+import example.user.service.UserClient;
 
 public class UserApplicationIT extends AbstractIntegrationTestBase {
     private String loginUrl = "http://localhost:8083/";
+    @Resource
+    private UserClient userService;
     @Resource
     protected WebDriver webDriver;
     private LoginPage loginPage;
@@ -57,10 +61,9 @@ public class UserApplicationIT extends AbstractIntegrationTestBase {
     }
 
     private void deleteUserFromRepository(String username) {
-        // TODO add UserClient and clean up after test
-//        User user = userService.findOne(username);
-//        if (user != null) {
-//            userService.delete(username);
-//        }
+        User user = userService.findByUsername(username);
+        if (user != null) {
+            userService.delete(user.getId());
+        }
     }
 }

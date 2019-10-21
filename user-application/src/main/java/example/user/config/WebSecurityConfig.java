@@ -24,8 +24,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .defaultSuccessUrl("/user/users").usernameParameter("j_username").passwordParameter("j_password")
                 .failureUrl("/login?error=true").permitAll();
         http.logout().logoutUrl("/j_spring_security_logout").logoutSuccessUrl("/login").permitAll();
-        http.authorizeRequests().antMatchers("/", "/home", "/api/**", "/static/**", "/webjars/**").permitAll()
-                .anyRequest().authenticated();
+        http.authorizeRequests().antMatchers("/", "/home", "/api/**", "/actuator/**", "/static/**", "/webjars/**")
+                .permitAll().anyRequest().authenticated();
     }
 
     @Autowired

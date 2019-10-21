@@ -37,10 +37,12 @@ import lombok.extern.log4j.Log4j2;
 public class AbstractIntegrationTestBase {
     @Autowired
     private Environment environment;
+
     @Test
     public void dummy() {
         Assert.assertTrue(true);
     }
+
     protected String get(String url, MediaType mediaType) {
         HttpHeaders headers = new HttpHeaders();
         if (mediaType != null) {
@@ -49,7 +51,7 @@ public class AbstractIntegrationTestBase {
         ResponseEntity<String> response = new TestRestTemplate().exchange(url, HttpMethod.GET,
                 new HttpEntity<>(headers), String.class);
         log.debug(response.getBody());
-        Assert.assertEquals(HttpStatus.OK, response.getStatusCode());
+        Assert.assertTrue(response.getStatusCode() == HttpStatus.OK || response.getStatusCode() == HttpStatus.FOUND);
         return response.getBody();
     }
 
