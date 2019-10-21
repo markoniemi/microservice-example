@@ -66,28 +66,4 @@ java -jar user-repository/target/user-repository-0.1-SNAPSHOT.jar
 [hello](http://localhost:8082/user-repository/hello/test)
 [users](http://localhost:8082/user-repository/api/rest/users)
 
-
-@startuml
-
-title Spring Cloud
-
-package infrastructure {
-    [spring-config]
-    [<<service-discovery>>\nEureka] as eureka
-    [github]
-    [filesystem]
-    [Consul] as consul
-}
-eureka -up- registry
-[spring-config] -right-> registry: register
-[spring-config] -up- config
-[user-repository] -right- UserApi
-[user-application] -left-> UserApi
-[user-repository] --> config: read
-[user-repository] --> registry: read & register
-[user-application] --> registry: read
-[spring-config] -down-> [github]
-[spring-config] -down-> [filesystem]
-[spring-config] -down-> consul
-
-@enduml
+![architecture](http://www.plantuml.com/plantuml/proxy?src=https://raw.githubusercontent.com/markoniemi/microservice-example/master/architecture.uml)
