@@ -93,7 +93,21 @@
         <version>1.1.0</version>
         <executions>
           <execution>
-            <id>wait-discovery</id>
+            <id>wait-config</id>
+            <phase>pre-integration-test</phase>
+            <goals>
+              <goal>wait</goal>
+            </goals>
+            <configuration>
+              <url>http://localhost:8761/eureka/apps/CONFIGSERVER</url>
+              <timeout>120000</timeout>
+              <headers>
+                <Content-Type>application/json;charset=UTF-8</Content-Type>
+              </headers>
+            </configuration>
+          </execution>
+          <execution>
+            <id>wait-user-repository</id>
             <phase>pre-integration-test</phase>
             <goals>
               <goal>wait</goal>

@@ -51,7 +51,7 @@ public class AbstractIntegrationTestBase {
         ResponseEntity<String> response = new TestRestTemplate().exchange(url, HttpMethod.GET,
                 new HttpEntity<>(headers), String.class);
         log.debug(response.getBody());
-        Assert.assertTrue(response.getStatusCode() == HttpStatus.OK || response.getStatusCode() == HttpStatus.FOUND);
+        Assert.assertTrue(response.getStatusCode() == HttpStatus.OK);
         return response.getBody();
     }
 
