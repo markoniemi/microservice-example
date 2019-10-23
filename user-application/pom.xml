@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0"
-  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
   xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
   <modelVersion>4.0.0</modelVersion>
   <artifactId>user-application</artifactId>
@@ -83,41 +82,6 @@
                 <argument>-jar</argument>
                 <argument>user-repository-0.1-SNAPSHOT.jar</argument>
               </arguments>
-            </configuration>
-          </execution>
-        </executions>
-      </plugin>
-      <plugin>
-        <groupId>se.thinkcode.wait</groupId>
-        <artifactId>http</artifactId>
-        <version>1.1.0</version>
-        <executions>
-          <execution>
-            <id>wait-config</id>
-            <phase>pre-integration-test</phase>
-            <goals>
-              <goal>wait</goal>
-            </goals>
-            <configuration>
-              <url>http://localhost:8761/eureka/apps/CONFIGSERVER</url>
-              <timeout>120000</timeout>
-              <headers>
-                <Content-Type>application/json;charset=UTF-8</Content-Type>
-              </headers>
-            </configuration>
-          </execution>
-          <execution>
-            <id>wait-user-repository</id>
-            <phase>pre-integration-test</phase>
-            <goals>
-              <goal>wait</goal>
-            </goals>
-            <configuration>
-              <url>http://localhost:8761/eureka/apps/USER-REPOSITORY</url>
-              <timeout>120000</timeout>
-              <headers>
-                <Content-Type>application/json;charset=UTF-8</Content-Type>
-              </headers>
             </configuration>
           </execution>
         </executions>
@@ -219,6 +183,14 @@
     <dependency>
       <groupId>org.springframework.cloud</groupId>
       <artifactId>spring-cloud-starter-netflix-eureka-client</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>org.springframework.retry</groupId>
+      <artifactId>spring-retry</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>org.springframework.boot</groupId>
+      <artifactId>spring-boot-starter-aop</artifactId>
     </dependency>
     <dependency>
       <groupId>org.springframework.boot</groupId>
