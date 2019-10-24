@@ -3,17 +3,21 @@ package example;
 import javax.annotation.Resource;
 
 import org.junit.Assert;
+import org.junit.Before;
 import org.junit.Test;
 
 import example.repository.user.Role;
 import example.repository.user.User;
 import example.user.service.UserClient;
-import lombok.extern.log4j.Log4j2;
 
-@Log4j2
 public class UserControllerIT extends AbstractIntegrationTestBase {
     @Resource
     UserClient userClient;
+
+    @Before
+    public void setUp() throws InterruptedException {
+        waitForServiceRegistration();
+    }
 
     @Test
     public void users() {
