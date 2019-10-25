@@ -61,6 +61,7 @@ public class AbstractIntegrationTestBase {
         return !Arrays.asList(environment.getActiveProfiles()).contains("local");
     }
 
+    @SuppressWarnings("squid:S2925")
     protected void waitForServiceRegistration() throws InterruptedException {
         while (discoveryClient.getInstances("user-repository").isEmpty()) {
             Thread.sleep(1000);
