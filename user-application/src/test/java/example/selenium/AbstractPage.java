@@ -22,6 +22,7 @@ public abstract class AbstractPage {
         click(By.id("menu-polls"));
         assertTitle("Polls");
     }
+
     public void files() {
         click(By.id("menu-files"));
         assertTitle("Files");
@@ -43,6 +44,8 @@ public abstract class AbstractPage {
     protected void selectByValue(By by, String value) {
         new Select(webDriver.findElement(by)).selectByValue(value);
     }
+
+    @SuppressWarnings("squid:S2925")
     protected void sleep() {
         try {
             Thread.sleep(SLEEP_TIME);
