@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import example.repository.user.User;
 import example.repository.user.UserService;
@@ -29,16 +30,16 @@ public interface UserClient extends UserService {
     User update(@RequestBody User user);
 
     @Override
-    @GetMapping(value = "/users/username/{username}")
-    User findByUsername(@PathVariable("username") String username);
-
-    @Override
     @GetMapping(value = "/users/{id}")
     User findById(@PathVariable("id") Long id);
 
     @Override
-    @GetMapping(value = "/users/email/{email}")
-    User findByEmail(@PathVariable("email") String email);
+    @GetMapping(value = "/users", params = "username")
+    public User findByUsername(@RequestParam("username") String username);
+
+    @Override
+    @GetMapping(value = "/users", params = "email")
+    public User findByEmail(@RequestParam("email") String email);
 
     @Override
     @GetMapping(value = "/users/exists/{id}")
