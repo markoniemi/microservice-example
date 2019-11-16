@@ -19,7 +19,7 @@ import lombok.extern.log4j.Log4j2;
 @RestController
 @RequestMapping("/api/rest")
 @Log4j2
-public class UserController {
+public class UserRestController {
     @Resource
     private UserRepository userRepository;
 

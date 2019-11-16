@@ -10,7 +10,7 @@ import example.repository.user.Role;
 import example.repository.user.User;
 import example.user.service.UserClient;
 
-public class UserControllerIT extends AbstractIntegrationTestBase {
+public class UserRestControllerIT extends AbstractIntegrationTestBase {
     @Resource
     UserClient userClient;
 
