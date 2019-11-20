@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import example.repository.user.User;
@@ -19,7 +20,7 @@ import lombok.extern.log4j.Log4j2;
 @RestController
 @RequestMapping("/api/rest")
 @Log4j2
-public class UserController {
+public class UserRestController {
     @Resource
     private UserRepository userRepository;
 
@@ -59,13 +60,13 @@ public class UserController {
         return userRepository.findById(id).orElse(null);
     }
 
-    @GetMapping(value = "/users/username/{username}")
-    public User findByUsername(@PathVariable("username") String username) {
+    @GetMapping(value = "/users", params = "username")
+    public User findByUsername(@RequestParam String username) {
         return userRepository.findByUsername(username);
     }
 
-    @GetMapping(value = "/users/email/{email}")
-    public User findByEmail(@PathVariable("email") String email) {
+    @GetMapping(value = "/users", params = "email")
+    public User findByEmail(@RequestParam String email) {
         return userRepository.findByEmail(email);
     }
 
