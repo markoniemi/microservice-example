@@ -2,7 +2,7 @@ FROM openjdk:8-jdk-alpine
 VOLUME /tmp
 RUN apk --no-cache add curl
 ARG DEPENDENCY=target/dependency
-#COPY ${DEPENDENCY}/BOOT-INF/lib /app/BOOT-INF/lib
+COPY ${DEPENDENCY}/BOOT-INF/lib /app/BOOT-INF/lib
 COPY ${DEPENDENCY}/META-INF /app/META-INF
 EXPOSE 8761
 COPY target/discovery-0.1-SNAPSHOT.jar /app/discovery-0.1-SNAPSHOT.jar

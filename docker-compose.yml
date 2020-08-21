@@ -33,8 +33,49 @@ services:
       - microservice-example
     environment:
       - SERVICE_URL_DEFAULT_ZONE=http://discovery:8761/eureka/
+      - SPRING_PROFILES_ACTIVE=postgre 
     depends_on:
       config:
         condition: service_healthy
+  user-application:
+    container_name: user-application
+    image: markoniemi/user-application
+    build: user-application
+    ports:
+      - 8083:8083
+    links:
+      - config:config
+    networks:
+      - microservice-example
+    environment:
+      - SERVICE_URL_DEFAULT_ZONE=http://discovery:8761/eureka/
+    depends_on:
+      config:
+        condition: service_healthy
+  db:
+    image: postgres
+    restart: always
+    environment:
+      POSTGRES_PASSWORD: mysecretpassword
+    ports:
+      - 5432:5432
+    networks:
+      - microservice-example
+  adminer:
+    image: adminer
+    restart: always
+    ports:
+      - 8080:8080
+    networks:
+      - microservice-example
+  portainer:
+    image: portainer/portainer:1.24.1
+    command: -H unix:///var/run/docker.sock
+    restart: always
+    ports:
+      - 9000:9000
+      - 8000:8000
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock            
 networks:
   microservice-example:
