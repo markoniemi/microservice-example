@@ -1,10 +1,12 @@
 package example.configserver;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
 import java.util.Collections;
 
-import org.junit.Assert;
-import org.junit.Test;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.context.SpringBootTest.WebEnvironment;
 import org.springframework.boot.test.web.client.TestRestTemplate;
@@ -17,11 +19,11 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.ContextHierarchy;
-import org.springframework.test.context.junit4.SpringRunner;
+import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 import example.configserver.config.ApplicationConfig;
 
-@RunWith(SpringRunner.class)
+@ExtendWith(SpringExtension.class)
 @SpringBootTest(classes = ConfigServerApplication.class, webEnvironment = WebEnvironment.DEFINED_PORT)
 @ContextHierarchy(@ContextConfiguration(classes = ApplicationConfig.class))
 @ActiveProfiles({ "local", "native" })
@@ -31,8 +33,8 @@ public class ConfigServerApplicationIT {
     @Test
     public void getConfig() {
         String body = get(url + "/user-repository/default", MediaType.APPLICATION_JSON);
-        Assert.assertTrue(body.contains("Remote"));
-        Assert.assertTrue(body.contains("user.role"));
+        assertTrue(body.contains("Remote"));
+        assertTrue(body.contains("user.role"));
     }
 
     private String get(String url, MediaType mediaType) {
@@ -42,7 +44,7 @@ public class ConfigServerApplicationIT {
         }
         ResponseEntity<String> response = new TestRestTemplate().exchange(url, HttpMethod.GET,
                 new HttpEntity<>(headers), String.class);
-        Assert.assertEquals(HttpStatus.OK, response.getStatusCode());
+        assertEquals(HttpStatus.OK, response.getStatusCode());
         return response.getBody();
     }
 }
