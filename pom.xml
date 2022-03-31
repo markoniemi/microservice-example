@@ -18,7 +18,7 @@
     <maven.compiler.target>1.8</maven.compiler.target>
     <java.version>1.8</java.version>
     <spring-cloud.version>2020.0.3</spring-cloud.version>
-    <spring.boot.version>2.4.8</spring.boot.version>
+    <spring.boot.version>2.5.12</spring.boot.version>
     <jacoco.maven.plugin.version>0.8.7</jacoco.maven.plugin.version>
     <bootstrap.version>4.6.0-1</bootstrap.version>
     <jquery.version>3.6.0</jquery.version>
