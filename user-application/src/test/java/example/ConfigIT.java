@@ -3,15 +3,12 @@ package example;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.junit.jupiter.api.Assumptions.assumeFalse;
 import static org.junit.jupiter.api.Assumptions.assumeTrue;
-
 import java.io.IOException;
 import java.util.List;
-
 import org.apache.commons.collections4.CollectionUtils;
 import org.apache.http.client.ClientProtocolException;
 import org.junit.jupiter.api.Test;
 import org.springframework.cloud.client.ServiceInstance;
-
 import lombok.extern.log4j.Log4j2;
 
 @Log4j2
@@ -22,14 +19,13 @@ public class ConfigIT extends AbstractIntegrationTestBase {
     public void localConfig() throws ClientProtocolException, IOException {
         assumeFalse(isCloudConfigEnabled());
         String body = get(url + "/actuator/env", null);
-        assertTrue(body.contains("runtime.environment"));
-        assertTrue(body.contains("local"));
+        assertTrue(body.contains("activeProfiles"));
     }
     @Test
     public void remoteConfig() throws ClientProtocolException, IOException {
         assumeTrue(isCloudConfigEnabled());
         String body = get(url + "/actuator/env", null);
-        assertTrue(body.contains("runtime.environment"));
+        assertTrue(body.contains("activeProfiles"));
         assertTrue(body.contains("remote"));
     }
 

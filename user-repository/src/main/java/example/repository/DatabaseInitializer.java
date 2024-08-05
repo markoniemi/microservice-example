@@ -1,17 +1,16 @@
 package example.repository;
 
-import javax.annotation.PostConstruct;
-import javax.annotation.Resource;
-
+import org.springframework.beans.factory.annotation.Autowired;
 import example.repository.user.Role;
 import example.repository.user.User;
 import example.repository.user.UserRepository;
+import jakarta.annotation.PostConstruct;
 import lombok.extern.log4j.Log4j2;
 
 @Log4j2
 public class DatabaseInitializer {
-    @Resource
-    private UserRepository userRepository;
+	@Autowired
+	private UserRepository userRepository;
 
     @PostConstruct
     public void initialize() {

@@ -1,12 +1,10 @@
 package example;
 
-import javax.annotation.Resource;
-
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.openqa.selenium.WebDriver;
-
+import org.springframework.beans.factory.annotation.Autowired;
 import example.repository.user.Role;
 import example.repository.user.User;
 import example.selenium.LoginPage;
@@ -16,9 +14,9 @@ import example.user.service.UserClient;
 
 public class UserApplicationIT extends AbstractIntegrationTestBase {
     private String loginUrl = "http://localhost:8083/";
-    @Resource
+    @Autowired
     private UserClient userService;
-    @Resource
+    @Autowired
     protected WebDriver webDriver;
     private LoginPage loginPage;
     private UsersPage usersPage;

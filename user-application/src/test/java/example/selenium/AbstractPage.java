@@ -39,7 +39,7 @@ public abstract class AbstractPage {
     }
 
     protected void assertTitle(String title) {
-        assertEquals(webDriver.getPageSource(), title, webDriver.getTitle());
+      assertEquals(title, webDriver.getTitle(), webDriver.getPageSource());
     }
 
     protected void selectByValue(By by, String value) {

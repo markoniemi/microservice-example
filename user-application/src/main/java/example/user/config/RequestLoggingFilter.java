@@ -1,9 +1,7 @@
 package example.user.config;
 
-import javax.servlet.http.HttpServletRequest;
-
 import org.springframework.web.filter.CommonsRequestLoggingFilter;
-
+import jakarta.servlet.http.HttpServletRequest;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -16,7 +14,7 @@ public class RequestLoggingFilter extends CommonsRequestLoggingFilter {
         super.setBeforeMessagePrefix("[");
         super.setIncludeQueryString(true);
         super.setIncludePayload(true);
-        super.setMaxPayloadLength(512);
+        super.setMaxPayloadLength(64000);
     }
 
     @Override

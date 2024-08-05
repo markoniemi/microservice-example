@@ -3,18 +3,15 @@ package example;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertNull;
-
-import javax.annotation.Resource;
-
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-
+import org.springframework.beans.factory.annotation.Autowired;
 import example.repository.user.Role;
 import example.repository.user.User;
 import example.user.service.UserClient;
 
 public class UserRestControllerIT extends AbstractIntegrationTestBase {
-    @Resource
+  @Autowired
     UserClient userClient;
 
     @BeforeEach
